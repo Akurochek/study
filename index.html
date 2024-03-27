@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Checker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    input[type="text"] {
+        padding: 5px;
+    }
+    button {
+        margin-top: 25px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <h1>Verbs</h1>
+    <input type="text" id="userWord">
+    <label for="userWord" id="secondWords">Введите слово:</label>
+    <div><button onclick="checkWord()">Проверить</button> <button id="answer" onclick="answer()">Ответ</button> <button id="translator2" onclick="translator()">Перевод</button></div>
+    
+    <p id="result"></p>
+
+    <script>
+        document.addEventListener ('keydown', function (event){
+            if(event.key=="Enter"){
+                checkWord()
+            }
+            
+        }); 
+        let chet=1
+        let chet2=1
+        let opened=false
+        let opened2=false
+        let userWord="xx"
+        let randomWord=""
+        let translat=""
+        let randomIndex=-1
+        checkWord()
+        document.getElementById('result').innerText = "";
+        function sayHi() {
+            document.getElementById('result').innerText = '';
+        }
+        function checkWord() {
+            if(opened2){
+                    chet2++
+                    opened2=false
+                    document.getElementById('translator2').innerText = 'Перевод';
+            }
+            if(opened){
+                    opened=false
+                    chet++
+                    document.getElementById('answer').innerText = 'Ответ';
+            }
+            userWord = document.getElementById('userWord').value;
+            console.log(userWord, randomWord)
+            if (userWord.toLowerCase() == randomWord.toLowerCase()) {
+                const secondWords = ['Я иду в школу', 'Я пошёл в школу', 'Я пойду в школу', 'Я иду в школу', 'Я не хожу в школу', 'Я не ходил в школу', 'Я не пойду в школу', 'Я не собираюсь идти в школу', 'Ты не ходишь в школу', 'Ты не ходил в школу', 'Ты не пойдёшь в школу', 'Ты не собираешься идти в школу', 'Ты не ходишь в школу', 'Ты ходил в школу', 'Ты пойдешь в школу', 'Ты идёшь в школу', 'Я хожу', 'Я ходил', 'Я буду ходить', 'Я иду', 'Я не хожу', 'Я не ходил', 'Я не буду ходить', 'Я не иду', 'Ты не ходишь', 'Ты не ходил', 'Ты не будешь ходить', 'Ты не идёшь', 'Ты не ходишь', 'Ты ходил', 'Ты будешь ходить', 'Ты идёшь', 'Я есть', 'Я был', 'Я буду', 'Я есть', 'Я не есть', 'Я не был', 'Я не буду', 'Я не есть', 'Ты есть', 'Ты был', 'Ты будешь', 'Ты есть', 'Ты есть', 'Ты был', 'Ты не будешь', 'Ты есть', 'Я ломаю', 'Я сломал', 'Я сломаю', 'Я ломаю', 'Я не ломаю', 'Я не ломал', 'Я не сломаю', 'Я не ломаю', 'Ты не ломаешь', 'Ты не ломал', 'Ты не сломаешь', 'Ты не ломаешь', 'Ты не ломаешь', 'Ты ломал', 'Ты сломаешь', 'Ты ломаешь', 'Я строю', 'Я строил', 'Я построю', 'Я строю', 'Я не строю', 'Я не строил', 'Я не построю', 'Я не строю', 'Ты не строишь', 'Ты не строил', 'Ты не построишь', 'Ты не строишь', 'Ты не строишь', 'Ты строил', 'Ты построишь', 'Ты строишь', 'Я покупаю', 'Я купил', 'Я куплю', 'Я покупаю', 'Я не покупаю', 'Я не покупал', 'Я не куплю', 'Я не покупаю', 'Ты не покупаешь', 'Ты не покупал', 'Ты не купишь', 'Ты не покупаешь', 'Ты не покупаешь', 'Ты покупал', 'Ты купишь', 'Ты покупаешь', 'Я ем', 'Я ел', 'Я буду есть', 'Я ем', 'Я не ем', 'Я не ел', 'Я не буду есть', 'Я не ем', 'Ты не ешь', 'Ты не ел', 'Ты не будешь есть', 'Ты не ешь', 'Ты не ешь', 'Ты ел', 'Ты будешь есть', 'Ты ешь', 'Я дерусь', 'Я дрался', 'Я буду драться', 'Я дерусь', 'Я не дерусь', 'Я не дрался', 'Я не буду драться', 'Я не дерусь', 'Ты не дерёшься', 'Ты не дрался', 'Ты не будешь драться', 'Ты не дерёшься', 'Ты не дерёшься', 'Ты дрался', 'Ты будешь драться', 'Ты дерёшься', 'Я делаю', 'Я делал', 'Я буду делать', 'Я делаю', 'Я не делаю', 'Я не делал', 'Я не буду делать', 'Я не делаю', 'Ты не делаешь', 'Ты не делал', 'Ты не будешь делать', 'Ты не делаешь', 'Ты не делаешь', 'Ты делал', 'Ты будешь делать', 'Ты делаешь', 'Я читаю', 'Я читал', 'Я буду читать', 'Я читаю', 'Я не читаю', 'Я не читал', 'Я не буду читать', 'Я не читаю', 'Ты не читаешь', 'Ты не читал', 'Ты не будешь читать', 'Ты не читаешь', 'Ты не читаешь', 'Ты читал', 'Ты будешь читать', 'Ты читаешь', 'Я вижу', 'Я видел', 'Я увижу', 'Я вижу', 'Я не вижу', 'Я не видел', 'Я не увижу', 'Я не вижу', 'Ты не видишь', 'Ты не видел', 'Ты не увидишь', 'Ты не видишь', 'Ты не видишь', 'Ты видел', 'Ты увидишь', 'Ты видишь', 'Я показываю', 'Я показывал', 'Я покажу', 'Я показываю', 'Я не показываю', 'Я не показывал', 'Я не буду показывать', 'Я не показываю', 'Ты не показываешь', 'Ты не показывал', 'Ты не будешь показывать', 'Ты не показываешь', 'Ты не показываешь', 'Ты показывал', 'Ты покажешь', 'Ты показываешь', 'Я думаю', 'Я думал', 'Я буду думать', 'Я думаю', 'Я не думаю', 'Я не думал', 'Я не буду думать', 'Я не думаю', 'Ты не думаешь', 'Ты не думал', 'Ты не будешь думать', 'Ты не думаешь', 'Ты не думаешь', 'Ты думал', 'Ты будешь думать', 'Ты думаешь', 'Я говорю', 'Я говорил', 'Я скажу', 'Я говорю', 'Я не говорю', 'Я не говорил', 'Я не скажу', 'Я не говорю', 'Ты не говоришь', 'Ты не говорил', 'Ты не скажешь', 'Ты не говоришь', 'Ты не говоришь', 'Ты говорил', 'Ты скажешь', 'Ты говоришь', 'Я пишу', 'Я писал', 'Я напишу', 'Я пишу', 'Я не пишу', 'Я не писал', 'Я не буду писать', 'Я не пишу', 'Ты не пишешь', 'Ты не писал', 'Ты не напишешь', 'Ты не пишешь', 'Ты не пишешь', 'Ты писал', 'Ты напишешь', 'Ты пишешь', 'Я учусь', 'Я учился', 'Я буду учиться', 'Я учусь', 'Я не учусь', 'Я не учился', 'Я не буду учиться', 'Я не учусь', 'Ты не учишься', 'Ты не учился', 'Ты не будешь учиться', 'Ты не учишься', 'Ты не учишься', 'Ты учился', 'Ты будешь учиться', 'Ты учишься', 'Я плачу', 'Я плакал', 'Я заплачу', 'Я плачу', 'Я не плачу', 'Я не плакал', 'Я не заплачу', 'Я не плачу', 'Ты не плачешь', 'Ты не плакал', 'Ты не заплачешь', 'Ты не плачешь', 'Ты не плачешь', 'Ты плакал', 'Ты заплачешь', 'Ты плачешь', 'Я играю', 'Я играл', 'Я буду играть', 'Я играю', 'Я не играю', 'Я не играл', 'Я не буду играть', 'Я не играю', 'Ты не играешь', 'Ты не играл', 'Ты не будешь играть', 'Ты не играешь', 'Ты не играешь', 'Ты играл', 'Ты будешь играть', 'Ты играешь', 'Я бросаю', 'Я бросил', 'Я брошу', 'Я бросаю', 'Я не бросаю', 'Я не бросал', 'Я не буду бросать', 'Я не бросаю', 'Ты не бросаешь', 'Ты не бросал', 'Ты не бросишь', 'Ты не бросаешь', 'Ты не бросаешь', 'Ты бросал', 'Ты бросишь', 'Ты бросаешь', 'Я отменяю', 'Я отменил', 'Я отменю', 'Я отменяю', 'Я не отменяю', 'Я не отменял', 'Я не буду отменять', 'Я не отменяю', 'Ты не отменяешь', 'Ты не отменял', 'Ты не отменешь', 'Ты не отменяешь', 'Ты не отменяешь', 'Ты отменял', 'Ты отменешь', 'Ты отменяешь', 'Я исправляю', 'Я исправил', 'Я исправлю', 'Я исправляю', 'Я не исправляю', 'Я не исправлял', 'Я не буду исправлять', 'Я не исправляю', 'Ты не исправляешь', 'Ты не исправлял', 'Ты не исправишь', 'Ты не исправляешь', 'Ты не исправляешь', 'Ты исправлял', 'Ты исправишь', 'Ты исправляешь', 'Я звоню', 'Я звонил', 'Я позвоню', 'Я звоню', 'Я не звоню', 'Я не звонил', 'Я не буду звонить', 'Я не звоню', 'Ты не звонишь', 'Ты не звонил', 'Ты не позвонишь', 'Ты не звонишь', 'Ты не звонишь', 'Ты звонил', 'Ты позвонишь', 'Ты звонишь', 'Я спрашиваю', 'Я спросил', 'Я спрошу', 'Я спрашиваю', 'Я не спрашиваю', 'Я не спрашивал', 'Я не буду спрашивать', 'Я не спрашиваю', 'Ты не спрашиваешь', 'Ты не спрашивал', 'Ты не спросишь', 'Ты не спрашиваешь', 'Ты не спрашиваешь', 'Ты спрашивал', 'Ты спросишь', 'Ты спрашиваешь', 'Я готовлю', 'Я готовил', 'Я приготовлю', 'Я готовлю', 'Я не готовлю', 'Я не готовил', 'Я не буду готовить', 'Я не готовлю', 'Ты не готовишь', 'Ты не готовил', 'Ты не приготовишь', 'Ты не готовишь', 'Ты не готовишь', 'Ты готовил', 'Ты приготовишь', 'Ты готовишь', 'Я плачу', 'Я плакал', 'Я буду плакать', 'Я плачу', 'Я не плачу', 'Я не плакал', 'Я не буду плакать', 'Я не плачу', 'Ты не плачешь', 'Ты не плакал', 'Ты не будешь плакать', 'Ты не плачешь', 'Ты не плачешь', 'Ты плакал', 'Ты будешь плакать', 'Ты плачешь', 'Я объясняю', 'Я объяснил', 'Я объясню', 'Я объясняю', 'Я не объясняю', 'Я не объяснял', 'Я не буду объяснять', 'Я не объясняю', 'Ты не объясняешь', 'Ты не объяснял', 'Ты не объяснишь', 'Ты не объясняешь', 'Ты не объясняешь', 'Ты объяснял', 'Ты объяснишь', 'Ты объясняешь']
+                const validWords = [
+  "I go to school",
+  "I went to school",
+  "I will go to school",
+  "Im going to school",
+  "I dont go to school",
+  "I didnt go to school",
+  "I will not go to school",
+  "Im not going to school",
+  "Dont you go to school?",
+  "Didnt you go to school?",
+  "Wont you go to school?",
+  "Arent you going to school?",
+  "Dont you go to school?",
+  "Did you go to school?",
+  "Will you go to school?",
+  "Are you going to school?",
+  "I walk",
+  "I walked",
+  "I will walk",
+  "Im walking",
+  "I dont walk",
+  "I didnt walk",
+  "I will not walk",
+  "Im not walking",
+  "Dont you walk?",
+  "Didnt you walk?",
+  "Wont you walk?",
+  "Arent you walking?",
+  "Dont you walk?",
+  "Did you walk?",
+  "Will you walk?",
+  "Are you walking?",
+  "I am",
+  "I was",
+  "I will be",
+  "Im being",
+  "I am not",
+  "I wasnt",
+  "I will not be",
+  "Im not being",
+  "Arent you?",
+  "Werent you?",
+  "Wont you be?",
+  "Arent you being?",
+  "Dont you?",
+  "Werent you?",
+  "Will you be?",
+  "Are you?",
+  "I break",
+  "I broke",
+  "I will break",
+  "Im breaking",
+  "I dont break",
+  "I didnt break",
+  "I will not break",
+  "Im not breaking",
+  "Dont you break?",
+  "Didnt you break?",
+  "Wont you break?",
+  "Arent you breaking?",
+  "Dont you break?",
+  "Did you break?",
+  "Will you break?",
+  "Are you breaking?",
+  "I build",
+  "I built",
+  "I will build",
+  "Im building",
+  "I dont build",
+  "I didnt build",
+  "I will not build",
+  "Im not building",
+  "Dont you build?",
+  "Didnt you build?",
+  "Wont you build?",
+  "Arent you building?",
+  "Dont you build?",
+  "Did you build?",
+  "Will you build?",
+  "Are you building?",
+  "I buy",
+  "I bought",
+  "I will buy",
+  "Im buying",
+  "I dont buy",
+  "I didnt buy",
+  "I will not buy",
+  "Im not buying",
+  "Dont you buy?",
+  "Didnt you buy?",
+  "Wont you buy?",
+  "Arent you buying?",
+  "Dont you buy?",
+  "Did you buy?",
+  "Will you buy?",
+  "Are you buying?",
+  "I eat",
+  "I ate",
+  "I will eat",
+  "Im eating",
+  "I dont eat",
+  "I didnt eat",
+  "I will not eat",
+  "Im not eating",
+  "Dont you eat?",
+  "Didnt you eat?",
+  "Wont you eat?",
+  "Arent you eating?",
+  "Dont you eat?",
+  "Did you eat?",
+  "Will you eat?",
+  "Are you eating?",
+  "I fight",
+  "I fought",
+  "I will fight",
+  "Im fighting",
+  "I dont fight",
+  "I didnt fight",
+  "I will not fight",
+  "Im not fighting",
+  "Dont you fight?",
+  "Didnt you fight?",
+  "Wont you fight?",
+  "Arent you fighting?",
+  "Dont you fight?",
+  "Did you fight?",
+  "Will you fight?",
+  "Are you fighting?",
+  "I make",
+  "I made",
+  "I will make",
+  "Im making",
+  "I dont make",
+  "I didnt make",
+  "I will not make",
+  "Im not making",
+  "Dont you make?",
+  "Didnt you make?",
+  "Wont you make?",
+  "Arent you making?",
+  "Dont you make?",
+  "Did you make?",
+  "Will you make?",
+  "Are you making?",
+  "I read",
+  "I read",
+  "I will read",
+  "Im reading",
+  "I dont read",
+  "I didnt read",
+  "I will not read",
+  "Im not reading",
+  "Dont you read?",
+  "Didnt you read?",
+  "Wont you read?",
+  "Arent you reading?",
+  "Dont you read?",
+  "Did you read?",
+  "Will you read?",
+  "Are you reading?",
+  "I see",
+  "I saw",
+  "I will see",
+  "Im seeing",
+  "I dont see",
+  "I didnt see",
+  "I will not see",
+  "Im not seeing",
+  "Dont you see?",
+  "Didnt you see?",
+  "Wont you see?",
+  "Arent you seeing?",
+  "Dont you see?",
+  "Did you see?",
+  "Will you see?",
+  "Are you seeing?",
+  "I show",
+  "I showed",
+  "I will show",
+  "Im showing",
+  "I dont show",
+  "I didnt show",
+  "I will not show",
+  "Im not showing",
+  "Dont you show?",
+  "Didnt you show?",
+  "Wont you show?",
+  "Arent you showing?",
+  "Dont you show?",
+  "Did you show?",
+  "Will you show?",
+  "Are you showing?",
+  "I think",
+  "I thought",
+  "I will think",
+  "Im thinking",
+  "I dont think",
+  "I didnt think",
+  "I will not think",
+  "Im not thinking",
+  "Dont you think?",
+  "Didnt you think?",
+  "Wont you think?",
+  "Arent you thinking?",
+  "Dont you think?",
+  "Did you think?",
+  "Will you think?",
+  "Are you thinking?",
+  "I tell",
+  "I told",
+  "I will tell",
+  "Im telling",
+  "I dont tell",
+  "I didnt tell",
+  "I will not tell",
+  "Im not telling",
+  "Dont you tell?",
+  "Didnt you tell?",
+  "Wont you tell?",
+  "Arent you telling?",
+  "Dont you tell?",
+  "Did you tell?",
+  "Will you tell?",
+  "Are you telling?",
+    "I write",
+    "I wrote",
+    "I will write",
+    "Im writing",
+    "I dont write",
+    "I didnt write",
+    "I will not write",
+    "Im not writing",
+    "Dont you write?",
+    "Didnt you write?",
+    "Wont you write?",
+    "Arent you writing?",
+    "Dont you write?",
+    "Did you write?",
+    "Will you write?",
+    "Are you writing?",
+    "I study",
+    "I studied",
+    "I will study",
+    "Im studying",
+    "I dont study",
+    "I didnt study",
+    "I will not study",
+    "Im not studying",
+    "Dont you study?",
+    "Didnt you study?",
+    "Wont you study?",
+    "Arent you studying?",
+    "Dont you study?",
+    "Did you study?",
+    "Will you study?",
+    "Are you studying?",
+    "I cry",
+    "I cried",
+    "I will cry",
+    "Im crying",
+    "I dont cry",
+    "I didnt cry",
+    "I will not cry",
+    "Im not crying",
+    "Dont you cry?",
+    "Didnt you cry?",
+    "Wont you cry?",
+    "Arent you crying?",
+    "Dont you cry?",
+    "Did you cry?",
+    "Will you cry?",
+    "Are you crying?",
+    "I play",
+    "I played",
+    "I will play",
+    "Im playing",
+    "I dont play",
+    "I didnt play",
+    "I will not play",
+    "Im not playing",
+    "Dont you play?",
+    "Didnt you play?",
+    "Wont you play?",
+    "Arent you playing?",
+    "Dont you play?",
+    "Did you play?",
+    "Will you play?",
+    "Are you playing?",
+    "I drop",
+    "I dropped",
+    "I will drop",
+    "Im dropping",
+    "I dont drop",
+    "I didnt drop",
+    "I will not drop",
+    "Im not dropping",
+    "Dont you drop?",
+    "Didnt you drop?",
+    "Wont you drop?",
+    "Arent you dropping?",
+    "Dont you drop?",
+    "Did you drop?",
+    "Will you drop?",
+    "Are you dropping?",
+    "I cancel",
+    "I cancelled",
+    "I will cancel",
+    "Im cancelling",
+    "I dont cancel",
+    "I didnt cancel",
+    "I will not cancel",
+    "Im not cancelling",
+    "Dont you cancel?",
+    "Didnt you cancel?",
+    "Wont you cancel?",
+    "Arent you cancelling?",
+    "Dont you cancel?",
+    "Did you cancel?",
+    "Will you cancel?",
+    "Are you cancelling?",
+    "I fix",
+    "I fixed",
+    "I will fix",
+    "Im fixing",
+    "I dont fix",
+    "I didnt fix",
+    "I will not fix",
+    "Im not fixing",
+    "Dont you fix?",
+    "Didnt you fix?",
+    "Wont you fix?",
+    "Arent you fixing?",
+    "Dont you fix?",
+    "Did you fix?",
+    "Will you fix?",
+    "Are you fixing?",
+    "I call",
+    "I called",
+    "I will call",
+    "Im calling",
+    "I dont call",
+    "I didnt call",
+    "I will not call",
+    "Im not calling",
+    "Dont you call?",
+    "Didnt you call?",
+    "Wont you call?",
+    "Arent you calling?",
+    "Dont you call?",
+    "Did you call?",
+    "Will you call?",
+    "Are you calling?",
+    "I ask",
+    "I asked",
+    "I will ask",
+    "Im asking",
+    "I dont ask",
+    "I didnt ask",
+    "I will not ask",
+    "Im not asking",
+    "Dont you ask?",
+    "Didnt you ask?",
+    "Wont you ask?",
+    "Arent you asking?",
+    "Dont you ask?",
+    "Did you ask?",
+    "Will you ask?",
+    "Are you asking?",
+    "I cook",
+    "I cooked",
+    "I will cook",
+    "Im cooking",
+    "I dont cook",
+    "I didnt cook",
+    "I will not cook",
+    "Im not cooking",
+    "Dont you cook?",
+    "Didnt you cook?",
+    "Wont you cook?",
+    "Arent you cooking?",
+    "Dont you cook?",
+    "Did you cook?",
+    "Will you cook?",
+    "Are you cooking?",
+    "I cry",
+    "I cried",
+    "I will cry",
+    "Im crying",
+    "I dont cry",
+    "I didnt cry",
+    "I will not cry",
+    "Im not crying",
+    "Dont you cry?",
+    "Didnt you cry?",
+    "Wont you cry?",
+    "Arent you crying?",
+    "Dont you cry?",
+    "Did you cry?",
+    "Will you cry?",
+    "Are you crying?",
+    "I explain",
+    "I explained",
+    "I will explain",
+    "Im explaining",
+    "I dont explain",
+    "I didnt explain",
+    "I will not explain",
+    "Im not explaining",
+    "Dont you explain?",
+    "Didnt you explain?",
+    "Wont you explain?",
+    "Arent you explaining?",
+    "Dont you explain?",
+    "Did you explain?",
+    "Will you explain?",
+    "Are you explaining?"];
+    const translateWords = ['Я не могу выносить это каждый день', 'Я не мог вынести это вчера', 'Я родила ребенка к тому моменту как ты пришел', 'Я избиваю крапиву каждый день, но она не сдается', 'Я избивал крапиву вчера', 'Я избивал к тому моменту как ты пришел', 'я кусаю печенье каждый день', 'я кусал печенье вчера', 'я кусал печенье к тому моменту как ты пришел', 'Я не позволю ему гореть в аду', 'Вчера я сжег листья', 'Вчера я сжег листья к тому моменту как ты пришел', 'вчера зал взорвался аплодисментами', 'взрыв аплодисментов к тому моменту как ты пришел', 'Зал взорвался аплодисментами, это было к тому времени, когда вы пришли', 'Запрещено рвать цветы', 'Цветы никто не рвал вчера', 'Цветы никто не рвал к тому моменту как ты пришел', 'Колокол громко звонит каждый день', 'Колокол громко звенел вчера', 'Я звонил в звонок три раза',"Я продаю деньги каждый день", "Я продал деньги вчера", "Я продал деньги вчера к тому моменту как ты пришел","Я чувствую каждый день", "Я почувствовал деньги вчера", "я почувствовал вранье к тому моменту как он меня обманул", "я плачу налоги каждый день","я заплатил налоги вчера","Я заплатил налоги к тому моменту как ты пришел","я летаю в америку каждый день","я летал в америку вчера","я полетел в америку к тому моменту как ты пришел","я гну ложки каждый день","я гнул ложки вчера","я гнул ложки к тому моменту как ты пришел","Не опирайтесь на стекло","Вчера никто не опирался на стекло вчера","Вчера никто не опирался на стекло к тому моменту как ты пришел","Я свечу фонариком каждый день","Я светил фонариком вчера","Я светил фонариком к тому моменту как ты пришел","Я держу планету каждый день","Я держал планету вчера","Я держу планету к тому моменту как ты пришел","я вишу на турнике каждый день","я висел на турнике вчера","я вишу на турнике к тому моменту как ты пришел","я одалживаю квартиру каждый день","я одолжил квартиру вчера","я одалживал квартиру к тому моменту как ты пришел"]
+                randomIndex = Math.floor(Math.random() * validWords.length);
+                //randomIndex++
+                randomWord = validWords[randomIndex];
+                translat = translateWords[randomIndex];
+                console.log(Math.floor(randomIndex / 3), randomIndex)
+                if(randomWord[randomWord.length - 1]=="?"){
+                    document.getElementById('secondWords').innerText=secondWords[randomIndex]+"?";
+                    randomWord= randomWord.slice(0, -1)
+                }else{
+                    document.getElementById('secondWords').innerText=secondWords[randomIndex];
+                }
+                
+                document.getElementById('result').innerText = 'Правильно!';
+                document.getElementById('userWord').value="";
+                
+
+                setTimeout(sayHi, 1000);
+            } else {
+                document.getElementById('result').innerText = 'Неправильно. Попробуйте еще раз!';
+            }
+        }
+        
+        function answer(){
+            chet++
+            if(chet%2==0){
+                if(opened2){
+                    chet2++
+                    opened2=false
+                    document.getElementById('translator2').innerText = 'Перевод';
+                }
+                opened=true
+                document.getElementById('result').innerText = 'Ответ: ' + randomWord;
+                document.getElementById('answer').innerText = 'Скрыть ответ';
+            }else{
+                opened=false
+                document.getElementById('result').innerText = '';
+                document.getElementById('answer').innerText = 'Ответ';
+            }
+            
+        }
+        
+        function translator(){
+            chet2++
+            if(chet2%2==0){
+                if(opened){
+                    opened=false
+                    chet++
+                    document.getElementById('answer').innerText = 'Ответ';
+                }
+                opened2=true
+                document.getElementById('result').innerText = 'Перевод: ' + translat;
+                document.getElementById('translator2').innerText = 'Скрыть перевод';
+            }else{
+                opened2=false
+                document.getElementById('result').innerText = '';
+                document.getElementById('translator2').innerText = 'Перевод';
+            }
+        }
+    </script>
+</body>
+</html>
